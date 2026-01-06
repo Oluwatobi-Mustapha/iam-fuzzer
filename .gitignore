@@ -1,0 +1,22 @@
+# --- Terraform ---
+# The .terraform directory contains the downloaded providers/plugins
+.terraform/
+
+# The State Files (SENSITIVE)
+*.tfstate
+*.tfstate.*
+
+# Variables files often contain secrets
+*.tfvars
+
+# Crash logs
+crash.log
+
+# --- Python ---
+__pycache__/
+*.pyc
+venv/
+.env
+
+# --- OS Junk ---
+.DS_Store
