@@ -3,9 +3,9 @@
 **Status:** Complete
 
 ## 1. Objective
-Build the "Harvester" component of the fuzzer. My goal is to extract custom IAM policies from a target account so they can be analyzed for logic flaws.
+Build the Harvester component of the fuzzer. My goal is to extract custom IAM policies from a target account so they can be analyzed for logic flaws.
 
-## 2. The "Blind Spot" Problem
+## 2. Blind Spot Problem
 I discovered that the standard AWS API call `list_policies()` is insufficient for a security audit.
 * **Limitation:** It only lists **Managed Policies** (standalone documents).
 * **Risk:** It completely ignores **Inline Policies** (embedded directly on users). And from my experience, Hackers often use Inline Policies to hide backdoors because standard scanners miss them.
