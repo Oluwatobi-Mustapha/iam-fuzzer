@@ -11,7 +11,7 @@ I discovered that the standard AWS API call `list_policies()` is insufficient fo
 * **Risk:** It completely ignores **Inline Policies** (embedded directly on users). And from my experience, Hackers often use Inline Policies to hide backdoors because standard scanners miss them.
 
 ## 3. The Solution: Dual-Scanner Architecture
-I implemented a two-part collection strategy in `src/collector.py`:
+So I implemented a two-part collection strategy in `src/collector.py`:
 
 ### A. The Managed Scanner (`list_customer_policies`)
 * **Method:** Uses `list_policies(Scope='Local')`.
