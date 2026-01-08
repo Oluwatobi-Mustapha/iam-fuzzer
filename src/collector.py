@@ -10,7 +10,7 @@ def list_customer_policies(profile_name):
         # Create the IAM client 
         iam = session.client('iam')
 
-        print(f"Scanning account using profile: {profile_name}...")
+        print(f"\nScanning account using profile: {profile_name}...")
 
         # Get the list. Scope='Local' means "Only show policies I created"
         response = iam.list_policies(Scope='Local') 
@@ -20,8 +20,8 @@ def list_customer_policies(profile_name):
 
         # Looping through them
         for policy in policies:
-            print(f"Found Policy: {policy['PolicyName']}")
-            print(f"Arn: {policy['Arn']}")
+            print(f"\nFound Policy: {policy['PolicyName']}")
+            print(f"\nArn: {policy['Arn']}")
 
     except ClientError as e:
         print(f"Error: {e}")
@@ -41,13 +41,13 @@ def list_inline_policies(profile_name):
         username = user['UserName']
         
         # Confirming if a user have inline policy
-        # API: list_user_policies (This is ifferent from list_policies!)
+        # API: list_user_policies (This is different from list_policies!)
         inline_policies = iam.list_user_policies(UserName=username)['PolicyNames']
         
         if inline_policies:
-            print(f"  HIDDEN RISK: User '{username}' has inline policies: {inline_policies}")
+            print(f"\nHIDDEN RISK: User '{username}' has inline policies: {inline_policies}")
         else:
-            print(f"  User '{username}' is clean (no inline policies).")
+            print(f"\nUser '{username}' is clean (no inline policies).")
 
 # The execution block
 if __name__ == '__main__':
