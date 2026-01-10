@@ -3,15 +3,15 @@
 **Status:** Complete
 
 ## 1. Objective
-Build the "Harvester" component of the fuzzer. The goal is to extract custom IAM policies from a target account so they can be analyzed for logic flaws.
+Build the Harvester component of the fuzzer. My goal is to extract custom IAM policies from a target account so they can be analyzed for logic flaws.
 
-## 2. The "Blind Spot" Problem
+## 2. Blind Spot Problem
 I discovered that the standard AWS API call `list_policies()` is insufficient for a security audit.
 * **Limitation:** It only lists **Managed Policies** (standalone documents).
-* **Risk:** It completely ignores **Inline Policies** (embedded directly on users). Hackers often use Inline Policies to hide backdoors because standard scanners miss them.
+* **Risk:** It completely ignores **Inline Policies** (embedded directly on users). And from my experience, Hackers often use Inline Policies to hide backdoors because standard scanners miss them.
 
 ## 3. The Solution: Dual-Scanner Architecture
-I implemented a two-part collection strategy in `src/collector.py`:
+So I implemented a two-part collection strategy in `src/collector.py`:
 
 ### A. The Managed Scanner (`list_customer_policies`)
 * **Method:** Uses `list_policies(Scope='Local')`.
@@ -24,3 +24,5 @@ I implemented a two-part collection strategy in `src/collector.py`:
 ## 4. Verification
 Ran the collector against `target-prod`.
 * **Result:** Successfully detected the bait policies (`fuzzer-test-admin-flaw`) AND the hidden inline policy on the test user.
+* *Screenshot from my Terminal*:![5AC66F95-643F-465C-8391-2E7F0B294FAA_1_201_a](https://github.com/user-attachments/assets/767a61f9-16c3-4476-bc63-ece65c870e00)
+  
