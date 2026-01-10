@@ -24,10 +24,12 @@ def analyze_policy(policy_json):
         if "*" in action and "*" in resource:
             findings.append("RISK_ADMIN_ACCESS")
     return findings
+    
 if __name__ == "__main__":
     bad_policy = {
         "Version": "2012-10-17",
         "Statement": [{ "Effect": "Allow", "Action": "*", "Resource": "*" }]
     }
+    
     result = analyze_policy(bad_policy)
     print(result)
