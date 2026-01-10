@@ -26,6 +26,7 @@ def analyze_policy(policy_json):
     return findings
     
 if __name__ == "__main__":
+    # A mock policy to verify the logic locally without needing AWS
     bad_policy = {
         "Version": "2012-10-17",
         "Statement": [{ "Effect": "Allow", "Action": "*", "Resource": "*" }]
