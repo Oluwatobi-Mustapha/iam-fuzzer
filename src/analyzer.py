@@ -1,5 +1,7 @@
-def analyze_policy(policy_json):
+def analyze_policy(policy_json): 
+
     findings = []
+
     statements = policy_json.get('Statement', [])
     if isinstance(statements, dict):
         statements = [statements]
@@ -19,7 +21,8 @@ def analyze_policy(policy_json):
         # Normalize Resource
         if isinstance(resource, str):
             resource = [resource]
-            
+        if "iam:CreateUser" in action: 
+            findings.append("RISK_IAM_PRIVILEGE_ESCALATION")    
         # Check for Admin Access
         if "*" in action and "*" in resource:
             findings.append("RISK_ADMIN_ACCESS")

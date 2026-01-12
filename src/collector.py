@@ -1,5 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError
+from analyzer import analyze_policy             
 
 # We pass the profile_name in as an argument
 def list_customer_policies(profile_name):
@@ -15,13 +16,33 @@ def list_customer_policies(profile_name):
         # Get the list. Scope='Local' means "Only show policies I created"
         response = iam.list_policies(Scope='Local') 
 
-        # Extract the list of policies from the messy JSON response
+        # Extract the list of policies from the bogus JSON response
         policies = response['Policies']
 
         # Looping through them
         for policy in policies:
             print(f"\nFound Policy: {policy['PolicyName']}")
             print(f"\nArn: {policy['Arn']}")
+
+            # Everything below is INDENTED to stay INSIDE the loop
+
+            # Get the Policy Version(For example, v1, v2, etc.)
+            version_id = policy['DefaultVersionId']
+
+            # Fetch the full JSON body details. VersionId (CamelCase according to Official Boto3 Doc.)
+            version_details = iam.get_policy_version(PolicyArn = policy['Arn'], VersionId = version_id)
+
+            # Extract details needed from the JSON document fetched
+            policy_document = version_details['PolicyVersion']['Document']
+
+            # Run the analyzer
+            findings = analyze_policy(policy_document)
+
+            # Reporting
+            if findings:
+             print(f"Alert! Found risks {findings}")
+            else:
+             print(f"No Risk")
 
     except ClientError as e:
         print(f"Error: {e}")
