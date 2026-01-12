@@ -23,5 +23,5 @@ So I implemented a two-part collection strategy in `src/collector.py`:
 ## 4. Verification
 Ran the collector against `target-prod`.
 * **Result:** Successfully detected the bait policies (`fuzzer-test-admin-flaw`) AND the hidden inline policy on the test user.
-* *Screenshot from my Terminal*:![5AC66F95-643F-465C-8391-2E7F0B294FAA_1_201_a](https://github.com/user-attachments/assets/767a61f9-16c3-4476-bc63-ece65c870e00)
+* _Screenshot:_![5AC66F95-643F-465C-8391-2E7F0B294FAA_1_201_a](https://github.com/user-attachments/assets/767a61f9-16c3-4476-bc63-ece65c870e00)
   
