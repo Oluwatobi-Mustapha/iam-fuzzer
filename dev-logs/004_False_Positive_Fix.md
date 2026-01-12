@@ -30,3 +30,4 @@ I tested the new logic against two custom policies I created:
 
 ## 4. Conclusion
 The tool now successfully distinguishes between **Good Users** (developers with tools) and **Bad Users** (attackers with backdoors). It has now moved from a Detection Script to an Analysis Tool.
+_Screenshot:_ ![alt text](5C43F64A-C9A9-4331-8196-FA5901E200D9.png)
