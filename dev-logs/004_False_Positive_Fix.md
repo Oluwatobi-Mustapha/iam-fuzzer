@@ -29,4 +29,5 @@ I tested the new logic against two custom policies I created:
 | `Risky-Backdoor` | `iam:CreateUser` | RISK | RISK |
 
 The tool now successfully distinguishes between **Good Users** (developers with tools) and **Bad Users** (attackers with backdoors). It has now moved from a Detection Script to an Analysis Tool.
-_Screenshot:_ 
+_Screenshot:_<img width="1883" height="712" alt="5C43F64A-C9A9-4331-8196-FA5901E200D9" src="https://github.com/user-attachments/assets/7dfb3294-4341-46dd-b4f5-b2733a34017f" />
+ 
