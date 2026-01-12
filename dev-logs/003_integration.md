@@ -27,4 +27,4 @@ I moved beyond simple Admin checks to catch what I refer to as **Demigod Users**
 Integrated `analyzer` into `collector`.
 * **Result:** The tool successfully scanned `target-prod`, identified `Admin-Access-Trap`, and correctly flagged the inline policies.
 
-Result Screenshot from my terminal: <img width="1125" height="423" alt="7944EB0E-B3D6-48BB-8BCC-5D874EA4F3F8" src="https://github.com/user-attachments/assets/e2801eb0-b35e-498d-be2d-4f7203a4fefb" />
+ Result: <img width="1125" height="423" alt="7944EB0E-B3D6-48BB-8BCC-5D874EA4F3F8" src="https://github.com/user-attachments/assets/e2801eb0-b35e-498d-be2d-4f7203a4fefb" />
