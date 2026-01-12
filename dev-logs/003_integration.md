@@ -14,7 +14,7 @@ I discovered that AWS returns data inconsistently, which breaks Python loops.
 
 ## 3. The Solution: Normalization Pattern
 I implemented a strict **Data Hygiene** layer at the start of `analyzer.py`.
-* **Method:** Used `isinstance()` to check types. If the input is a String or Dict, I immediately wrap it in a List `[]`. (See [line 18 of the collector.py code](https://github.com/Oluwatobi-Mustapha/iam-fuzzer/blob/main/src/analyzer.py)).
+* **Method:** Used `isinstance()` to check types. If the input is a String or Dict, I immediately wrap it in a List `[]`. (See [line 18 of the collector code](https://github.com/Oluwatobi-Mustapha/iam-fuzzer/blob/main/src/analyzer.py)).
 * **Result:** The analysis logic only needs **one single loop**. I don't need to write duplicate code for different data shapes. This adheres to the **DRY (Don't Repeat Yourself)** principle.
 
 ## 4. The Logic Upgrade
@@ -27,4 +27,4 @@ I moved beyond simple Admin checks to catch what I refer to as **Demigod Users**
 Integrated `analyzer` into `collector`.
 * **Result:** The tool successfully scanned `target-prod`, identified `Admin-Access-Trap`, and correctly flagged the inline policies.
 
- Result: <img width="1125" height="423" alt="7944EB0E-B3D6-48BB-8BCC-5D874EA4F3F8" src="https://github.com/user-attachments/assets/e2801eb0-b35e-498d-be2d-4f7203a4fefb" />
+* _Screenshot:_ <img width="1125" height="423" alt="7944EB0E-B3D6-48BB-8BCC-5D874EA4F3F8" src="https://github.com/user-attachments/assets/e2801eb0-b35e-498d-be2d-4f7203a4fefb" />
