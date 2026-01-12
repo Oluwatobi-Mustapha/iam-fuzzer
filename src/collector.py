@@ -40,9 +40,9 @@ def list_customer_policies(profile_name):
 
             # Reporting
             if findings:
-             print(f"Alert! Found risks {findings}")
+             print(f"\nAlert! Found risks {findings}")
             else:
-             print(f"No Risk")
+             print(f"\nNo Risk")
 
     except ClientError as e:
         print(f"Error: {e}")
@@ -61,14 +61,31 @@ def list_inline_policies(profile_name):
     for user in users:
         username = user['UserName']
         
-        # Confirming if a user have inline policy
-        # API: list_user_policies (This is different from list_policies!)
-        inline_policies = iam.list_user_policies(UserName=username)['PolicyNames']
+        # Get the list of inline policy NAMES
+        policy_names = iam.list_user_policies(UserName=username)['PolicyNames']
         
-        if inline_policies:
-            print(f"\nHIDDEN RISK: User '{username}' has inline policies: {inline_policies}")
-        else:
-            print(f"\nUser '{username}' is clean (no inline policies).")
+        if not policy_names:
+            print(f"\nUser '{username}' has no inline policies.")
+
+            continue
+
+        for policy_name in policy_names:
+
+            # Fetch the actual Policy Document (JSON)
+            response = iam.get_user_policy(
+                UserName=username, 
+                PolicyName=policy_name
+            )
+            policy_document = response['PolicyDocument']
+            
+            # Analyze it from my analyzer.py
+            findings = analyze_policy(policy_document)
+            
+            # Report based on Real risks findings
+            if findings:
+                print(f"\nHIDDEN RISK! User '{username}' Policy '{policy_name}': {findings}")
+            else:
+                print(f"\nUser '{username}' Policy '{policy_name}' is safe.")
 
 # The execution block
 if __name__ == '__main__':
