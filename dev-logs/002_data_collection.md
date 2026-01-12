@@ -1,6 +1,5 @@
 # Log 002: IAM Data Collection & The Inline Blind Spot
 **Date:** 2026-01-08
-**Status:** Complete
 
 ## 1. Objective
 Build the Harvester component of the fuzzer. My goal is to extract custom IAM policies from a target account so they can be analyzed for logic flaws.
