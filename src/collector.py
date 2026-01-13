@@ -1,5 +1,6 @@
 import boto3
-import json # This allows us to speak File lanaguage
+import json 
+import argparse # handles Command Line Arguments
 from botocore.exceptions import ClientError
 from analyzer import analyze_policy             
 
@@ -121,11 +122,26 @@ def save_findings():
     with open('findings.json', 'w') as f: 
 
         # Dump the python list into the file as JSON text
+        # indent=4 makes it human-readable
         json.dump(findings_list, f, indent=4)
         print(f"\nFile saved successfully!")
 # The execution block
 if __name__ == '__main__':
-    # We call the function with the specific STRING name of the profile
-    list_customer_policies("target-prod")
-    list_inline_policies("target-prod")
+    # Init: Create the input manager
+    parser = argparse.ArgumentParser(description="AWS IAM Security Scanner")
+
+    # Define: User must provide '--profile' (required)
+    parser.add_argument("--profile", type=str, required=True, help="The AWS CLI profile to scan")
+    
+    # Capture: Read the terminal inputs; This is the trigger button
+    args = parser.parse_args()
+
+    # Extract: Get the profile string or specific value
+    profile = args.profile
+
+    print(f"Starting scan for profile...{profile}...")
+
+    # EXECUTE: Pass the dynamic variable to our functions
+    list_customer_policies(profile)
+    list_inline_policies(profile)
     save_findings()
