@@ -1,9 +1,12 @@
 import boto3
+import json # This allows us to speak File lanaguage
 from botocore.exceptions import ClientError
 from analyzer import analyze_policy             
 
+# Global lines to store findings
+findings_list = []
 # We pass the profile_name in as an argument
-def list_customer_policies(profile_name):
+def list_customer_policies(profile_name): # Managed policy
     try:
         # Create session 
         session = boto3.Session(profile_name=profile_name)
@@ -38,12 +41,22 @@ def list_customer_policies(profile_name):
             # Run the analyzer
             findings = analyze_policy(policy_document)
 
-            # Reporting
+            # Reporting and storing
             if findings:
-             print(f"\nAlert! Found risks {findings}")
-            else:
-             print(f"\nNo Risk")
+                print(f"\nAlert! Founds risks {findings} in {policy['PolicyName']}")
 
+                # Creating a dictionary for this specific finding
+                finding_data = {
+                    "Type": "Managed Policy",
+                    "Name": policy['PolicyName'],
+                    "ARN" : policy['Arn'],
+                    "Risks": findings
+                }
+                # Adding it to the final bucket
+                findings_list.append(finding_data)
+            else:
+                print(f"\nNo risk!")
+            
     except ClientError as e:
         print(f"Error: {e}")
     except Exception as e:
@@ -83,12 +96,36 @@ def list_inline_policies(profile_name):
             
             # Report based on Real risks findings
             if findings:
-                print(f"\nHIDDEN RISK! User '{username}' Policy '{policy_name}': {findings}")
-            else:
-                print(f"\nUser '{username}' Policy '{policy_name}' is safe.")
+                print(f"HIDDEN RISK! User: '{username}' - Policy '{policy_name}': {findings}\n")
 
+                # Create the dictionary
+                finding_data = {
+                    "Type": "Inline Policy",
+                    "Name": f"{username} - {policy_name}",
+                    "ARN" : "N/A",
+                    "Risks": findings
+                }
+
+                # Add to the Master Bucket
+                findings_list.append(finding_data)
+            else:
+                print(f"User '{username}' - Policy '{policy_name}' is safe.\n")
+def save_findings():
+    """Writes the the findings_list into a JSON file"""
+    print(f"\n Saving results to findings.json...")
+
+    #  Context Manager A.K.A 'with'; guarantee that file closed properly
+    #  Open or create a new file called 'findings.json' in 'write' mode ('w')
+    #  And temporary handle (variable) named f representing the open file; open door to the file
+
+    with open('findings.json', 'w') as f: 
+
+        # Dump the python list into the file as JSON text
+        json.dump(findings_list, f, indent=4)
+        print(f"\nFile saved successfully!")
 # The execution block
 if __name__ == '__main__':
     # We call the function with the specific STRING name of the profile
     list_customer_policies("target-prod")
     list_inline_policies("target-prod")
+    save_findings()
