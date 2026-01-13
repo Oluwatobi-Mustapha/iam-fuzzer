@@ -28,7 +28,6 @@ First, run the [collector.py](https://github.com/Oluwatobi-Mustapha/iam-fuzzer/b
 ### Command
 
 ```bash
-# Use python3 explicitly to ensure compatibility
 python3 src/collector.py --profile target-prod
 ```
 
@@ -66,6 +65,7 @@ python3 src/visualizer.py
 |------------------|-------------|
 | `findings.json`  | JSON-formatted log of all detected risks, suitable for programmatic auditing |
 | `report.html`    | Standalone HTML file containing the risk assessment dashboard |
+
 
 
 
