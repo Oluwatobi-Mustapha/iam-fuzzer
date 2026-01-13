@@ -11,7 +11,7 @@ A specialized security tool for detecting privilege escalation paths in AWS Iden
 ## Installation
 
 ```bash
-git clone [https://github.com/Oluwatobi-Mustapha/iam-fuzzer.git](https://github.com/Oluwatobi-Mustapha/iam-fuzzer.git)
+git clone (https://github.com/Oluwatobi-Mustapha/iam-fuzzer.git)
 cd iam-fuzzer
 pip install boto3
 ```
@@ -66,6 +66,7 @@ python3 src/visualizer.py
 |------------------|-------------|
 | `findings.json`  | JSON-formatted log of all detected risks, suitable for programmatic auditing |
 | `report.html`    | Standalone HTML file containing the risk assessment dashboard |
+
 
 
 
