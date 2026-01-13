@@ -33,12 +33,9 @@ python3 src/collector.py --profile target-prod
 
 ### Note
 - Please replace `target-prod` with your AWS CLI profile name.  
-- If your profile name contains spaces, wrap it in double quotes:
 ```bash
 python3 src/collector.py --profile "My Profile Name"
 ```
-If not, type it as it is wrapped with''.
-
 **Output**
 
 ```bash
@@ -65,6 +62,7 @@ python3 src/visualizer.py
 |------------------|-------------|
 | `findings.json`  | JSON-formatted log of all detected risks, suitable for programmatic auditing |
 | `report.html`    | Standalone HTML file containing the risk assessment dashboard |
+
 
 
 
