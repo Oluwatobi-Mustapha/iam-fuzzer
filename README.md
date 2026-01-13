@@ -11,7 +11,7 @@ A specialized security tool for detecting privilege escalation paths in AWS Iden
 ## Installation
 
 ```bash
-git clone [https://github.com/Oluwatobi-Mustapha/iam-fuzzer.git](https://github.com/Oluwatobi-Mustapha/iam-fuzzer.git)
+git clone (https://github.com/Oluwatobi-Mustapha/iam-fuzzer.git)
 cd iam-fuzzer
 pip install boto3
 ```
@@ -23,10 +23,18 @@ The tool operates in **two stages**: **collection** and **visualization**.
 
 ## Scan Environment
 
-Run the collector to scan the `target-prod` profile. This step ingests IAM data, analyzes policy logic, and serializes findings to disk.
+First, run the [collector.py](https://github.com/Oluwatobi-Mustapha/iam-fuzzer/blob/main/src/collector.py) file in your terminal with the --profile flag to scan a specific AWS CLI profile. This step ingests IAM data, analyzes policy logic, and serializes findings to disk.
+
+### Command
 
 ```bash
-python src/collector.py
+python3 src/collector.py --profile target-prod
+```
+
+### Note
+- Please replace `target-prod` with your AWS CLI profile name.  
+```bash
+python3 src/collector.py --profile "My Profile Name"
 ```
 **Output**
 
@@ -39,13 +47,13 @@ The generated findings.json file contains raw vulnerability data produced during
 # Generate Report
 Run the visualizer to parse the raw findings and generate a responsive HTML dashboard.
 ```bash
-python src/visualizer.py
+python3 src/visualizer.py
 ```
 **Output**
 
 `report.html`
 
-The generated `report.html` file is a standalone interactive security dashboard.
+**_The generated report.html file is a standalone interactive security dashboard. Open this file in your web browser to view the results._**
 
 ---
 ## Artifacts
@@ -54,5 +62,10 @@ The generated `report.html` file is a standalone interactive security dashboard.
 |------------------|-------------|
 | `findings.json`  | JSON-formatted log of all detected risks, suitable for programmatic auditing |
 | `report.html`    | Standalone HTML file containing the risk assessment dashboard |
+
+
+
+
+
 
 
