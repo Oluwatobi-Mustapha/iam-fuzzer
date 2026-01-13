@@ -25,5 +25,6 @@ _So this allows the scanning logic to run on a server (CI/CD) while the report c
 ## 5. Outcome
 Successfully generated `report.html` containing accurate findings from `target-prod`.
 * **Proof of Concept:** Validated that the Visualizer correctly parses the JSON output from the Collector.
+  
 **_Screenshot_**:
-![alt text](image-1.png)
+<img width="2688" height="1680" alt="image" src="https://github.com/user-attachments/assets/3c8c92db-1e34-4674-9c22-31fb5c8aaa78" />
