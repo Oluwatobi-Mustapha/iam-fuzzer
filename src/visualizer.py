@@ -1,0 +1,102 @@
+import json
+
+def generate_report():
+    # Load the data
+    try:
+        with open('findings.json', 'r') as f: # 'r' is Read-Only
+            findings = json.load(f)
+    except FileNotFoundError:
+        print(f"Error: findings.json not found. Run collector.py first!")
+        return
+    
+    # HTML Header(I copied this from codepen.io + I added the CSS to make the table look modern)
+    html_content = """
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body { font-family: 'Open Sans', sans-serif; background: #34495E; color: #fff; padding: 20px; }
+            h1 { text-align: center; color: #dd5; }
+            
+            /* The RWD Table CSS */
+            .rwd-table {
+                margin: 1em 0;
+                min-width: 300px;
+                width: 100%;
+                background: #34495E;
+                color: #fff;
+                border-radius: .4em;
+                overflow: hidden;
+            }
+            .rwd-table tr {
+                border-top: 1px solid #ddd;
+                border-bottom: 1px solid #ddd;
+            }
+            .rwd-table th {
+                display: none; /* Hide headers on small screens */
+            }
+            .rwd-table td {
+                display: block; /* Stack cells */
+            }
+            .rwd-table td:first-child {
+                padding-top: .5em;
+            }
+            .rwd-table td:last-child {
+                padding-bottom: .5em;
+            }
+            .rwd-table td:before {
+                content: attr(data-th) ": "; /* This is the magic part! */
+                font-weight: bold;
+                width: 6.5em;
+                display: inline-block;
+                color: #dd5;
+            }
+            
+            /* Make it look like a normal table on big screens */
+            @media (min-width: 480px) {
+                .rwd-table td:before { display: none; }
+                .rwd-table th, .rwd-table td { display: table-cell; padding: 1em !important; }
+                .rwd-table th { display: table-cell; text-transform: uppercase; background: #2c3e50; color: #dd5; }
+                .rwd-table tr:hover { background-color: #46637f; }
+            }
+            
+            /* Risk Highlighter */
+            .risk-cell { color: #ff6b6b; font-weight: bold; }
+        </style>
+    </head>
+    <body>
+        <h1> Oluwatobi-IAM Security Report</h1>
+        
+        <table class="rwd-table">
+            <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Risks Detected</th>
+            </tr>
+    """
+
+    # The Loop (Injecting my Python data into the Table)
+    for finding in findings:
+        # I used .join() to remove the brackets and quotes
+        readable_risks = ", ".join(finding['Risks'])
+        row = f"""
+            <tr>
+                <td data-th="Type">{finding['Type']}</td>
+                <td data-th="Name">{finding['Name']}</td>
+                <td data-th="Risks" class="risk-cell">{readable_risks}</td>
+            </tr>
+        """
+        html_content += row
+
+    # Footer
+    html_content += """
+        </table>
+    </body>
+    </html>
+    """
+    with open('report.html', 'w') as f:
+          f.write(html_content)
+    print(" Dashboard generated: report.html")
+
+if __name__ == "__main__":
+    generate_report()
