@@ -23,11 +23,23 @@ The tool operates in **two stages**: **collection** and **visualization**.
 
 ## Scan Environment
 
-Run the collector to scan the `target-prod` profile. This step ingests IAM data, analyzes policy logic, and serializes findings to disk.
+Run the [collector.py file first](https://github.com/Oluwatobi-Mustapha/iam-fuzzer/blob/main/src/collector.py)  to scan a specific AWS CLI profile. This step ingests IAM data, analyzes policy logic, and serializes findings to disk.
+
+### Command
 
 ```bash
-python src/collector.py
+# Use python3 explicitly to ensure compatibility
+python3 src/collector.py --profile target-prod
 ```
+
+### Note
+- Please replace `target-prod` with your AWS CLI profile name.  
+- If your profile name contains spaces, wrap it in double quotes:
+```bash
+python3 src/collector.py --profile "My Profile Name"
+```
+If not, type it as it is wrapped with''.
+
 **Output**
 
 ```bash
@@ -39,13 +51,13 @@ The generated findings.json file contains raw vulnerability data produced during
 # Generate Report
 Run the visualizer to parse the raw findings and generate a responsive HTML dashboard.
 ```bash
-python src/visualizer.py
+python3 src/visualizer.py
 ```
 **Output**
 
 `report.html`
 
-The generated `report.html` file is a standalone interactive security dashboard.
+**_The generated report.html file is a standalone interactive security dashboard. Open this file in your web browser to view the results._**
 
 ---
 ## Artifacts
@@ -54,5 +66,6 @@ The generated `report.html` file is a standalone interactive security dashboard.
 |------------------|-------------|
 | `findings.json`  | JSON-formatted log of all detected risks, suitable for programmatic auditing |
 | `report.html`    | Standalone HTML file containing the risk assessment dashboard |
+
 
 
