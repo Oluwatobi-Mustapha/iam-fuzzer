@@ -23,7 +23,7 @@ The tool operates in **two stages**: **collection** and **visualization**.
 
 ## Scan Environment
 
-Run the [collector.py file first](https://github.com/Oluwatobi-Mustapha/iam-fuzzer/blob/main/src/collector.py)  to scan a specific AWS CLI profile. This step ingests IAM data, analyzes policy logic, and serializes findings to disk.
+First, run the [collector.py](https://github.com/Oluwatobi-Mustapha/iam-fuzzer/blob/main/src/collector.py) file in your terminal with the --profile flag to scan a specific AWS CLI profile. This step ingests IAM data, analyzes policy logic, and serializes findings to disk.
 
 ### Command
 
@@ -66,6 +66,7 @@ python3 src/visualizer.py
 |------------------|-------------|
 | `findings.json`  | JSON-formatted log of all detected risks, suitable for programmatic auditing |
 | `report.html`    | Standalone HTML file containing the risk assessment dashboard |
+
 
 
 
