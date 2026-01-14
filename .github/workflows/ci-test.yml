@@ -1,0 +1,30 @@
+name: IAM Tool Smoke Test
+
+# Trigger: Wake up the robot every time I push code
+on: [push]
+
+jobs:
+  build:
+    # The robot uses a fresh Linux machine
+    runs-on: ubuntu-latest  
+
+    steps:
+    # Download  code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Install Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    # Install libraries (boto3, etc.)
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    # The "Smoke Test"
+    - name: Test Execution (Help Menu)
+      run: python src/collector.py --help
