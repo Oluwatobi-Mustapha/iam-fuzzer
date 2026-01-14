@@ -26,5 +26,5 @@ Ran the collector against `target-prod`.
   
 * _Screenshot:_![5AC66F95-643F-465C-8391-2E7F0B294FAA_1_201_a](https://github.com/user-attachments/assets/767a61f9-16c3-4476-bc63-ece65c870e00)
 
-**Security Note:** The AWS accounts shown in screenshots are either deleted, modified. No live credentials are exposed. This was done intentionally for illustrative purposes.
+**Security Note:** The AWS accounts shown in screenshots are either deleted or modified. No live credentials are exposed. This was done intentionally for illustrative purposes.
   
