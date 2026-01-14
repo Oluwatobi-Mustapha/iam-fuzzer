@@ -22,7 +22,7 @@ The initial pipeline failed immediately despite the code working locally.
 * **The Error:** `ERROR: Could not find a version that satisfies the requirement black==25.12.0`.
 * **Root Cause:** The default GitHub runner was using **Python 3.9**, but my local development (and the `black` formatter) relied on **Python 3.10+**.
 
-* So, I simply Upgraded the workflow configuration to force **Python 3.11**, matching my local environment.
+* So, I simply upgraded the workflow configuration to force **Python 3.11**, matching my local environment.
 
 * Achieved a passing build (Green Checkmark). And the remote server successfully checked out the code, installed dependencies, and ran the `collector.py --help` command without crashing.
 
