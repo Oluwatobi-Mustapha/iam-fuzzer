@@ -1,2 +1,6 @@
-.DS_Store
+# Ignore scan outputs
 findings.json
+report.html
+*.html
+*.json
+ds_store
