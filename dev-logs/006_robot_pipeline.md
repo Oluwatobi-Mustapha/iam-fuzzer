@@ -1,4 +1,4 @@
-# Log 006: The "Robot" & The Pipeline (CI/CD)
+# Log 006: The Robot & The Pipeline (CI/CD)
 **Date:** 2026-01-14
 
 ## Objective
