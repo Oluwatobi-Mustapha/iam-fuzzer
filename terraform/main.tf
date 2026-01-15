@@ -11,7 +11,7 @@ resource "aws_iam_role" "risk_stranger" {
   name = "target-prod-risk-stranger"
 
   # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
+  # Terraform expression format to valid JSON syntax.
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -33,7 +33,7 @@ resource "aws_iam_role" "risk_stranger" {
 }
 
 
-# The "Confused Deputy" Role (Scenario B)
+# The Confused Deputy Role (Scenario B)
 # RISK: Trusts a Vendor (simulated by your own account) but MISSING the ExternalID check
 resource "aws_iam_role" "risk_no_external_id" {
   name = "target-prod-risk-deputy"
