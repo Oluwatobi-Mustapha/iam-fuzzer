@@ -1,24 +1,34 @@
+
+#  Demo: IAM Role Trust Policy Risk Scenarios
+#  - Strange account trust
+#  - Confused deputy (missing ExternalId)
+#  - Safe vendor role with ExternalId
+# 
+
 provider "aws" {
   region = "us-east-1"
 }
+# Fetch current AWS account ID
 data "aws_caller_identity" "current" {}
 
+# Expose account ID for debugging and reference
 output "account_id" {
   value = data.aws_caller_identity.current.account_id
 }
 
+# RISK SCENARIO A:
+# Trusts an external AWS account root user directly
 resource "aws_iam_role" "risk_stranger" {
   name = "target-prod-risk-stranger"
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
+  # Allows account 220065406396 to assume this role.
+  # jsonencode helps format to JSON syntax
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-      {
+      { 
         Action = "sts:AssumeRole"
         Effect = "Allow"
-        Sid    = ""
         Principal = {
           "AWS" = "arn:aws:iam::220065406396:root"
         }
@@ -33,8 +43,8 @@ resource "aws_iam_role" "risk_stranger" {
 }
 
 
-# The "Confused Deputy" Role (Scenario B)
-# RISK: Trusts a Vendor (simulated by your own account) but MISSING the ExternalID check
+# RISK SCENARIO B (Confused Deputy):
+# Vendor role WITHOUT ExternalId condition
 resource "aws_iam_role" "risk_no_external_id" {
   name = "target-prod-risk-deputy"
 
@@ -49,8 +59,7 @@ resource "aws_iam_role" "risk_no_external_id" {
           # In a real attack, this would be the Vendor's ID.
           AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
         }
-        # Note: The "Condition" block is MISSING!
-        # This is what makes it vulnerable.
+        # You will notice the "Condition" block is MISSING! and that makes it vuln.
       }
     ]
   })
@@ -61,7 +70,8 @@ resource "aws_iam_role" "risk_no_external_id" {
   }
 }
 
-# The safe vendor
+# SAFE SCENARIO:
+# Vendor role protected with ExternalId
 resource "aws_iam_role" "safe_vendor" {
   name = "target-prod-safe-vendor"
 
@@ -72,12 +82,11 @@ resource "aws_iam_role" "safe_vendor" {
         Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
-          # I use my own account ID so Terraform doesn't crash.
-          # In a real attack, this would be the Vendor's ID.
           AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
         }
         Condition = {
           StringEquals = {
+            # Prevents confused deputy attacks
             "sts:ExternalId" = "MySecretPass123"
           }
         }

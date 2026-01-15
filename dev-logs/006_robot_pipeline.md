@@ -33,4 +33,8 @@ The initial pipeline failed immediately despite the code working locally.
   
   
 
+<<<<<<< Updated upstream
+=======
+Achieved a passing build (Green Checkmark). And the remote server successfully checked out the code, installed dependencies, and ran the `collector.py --help` command without crashing.
+>>>>>>> Stashed changes
 
