@@ -27,3 +27,8 @@ venv/
 findings.json
 
 report.html
+
+# Ignore JetBrains IDE settings
+.idea/
+**/.idea/
+*.iml
