@@ -14,7 +14,6 @@ output "account_id" {
 # Trusts an external AWS account root user directly
 resource "aws_iam_role" "risk_stranger" {
   name = "target-prod-risk-stranger"
-
   # Allows account 220065406396 to assume this role.
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -34,7 +33,6 @@ resource "aws_iam_role" "risk_stranger" {
     Env = "Test"
   }
 }
-
 
 # RISK SCENARIO B (Confused Deputy):
 # Vendor role WITHOUT ExternalId condition
