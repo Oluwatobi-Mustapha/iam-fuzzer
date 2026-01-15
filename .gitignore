@@ -23,4 +23,7 @@ venv/
 .DS_Store
 .DS_Store
 
-findings.jsonreport.html
+
+findings.json
+
+report.html
