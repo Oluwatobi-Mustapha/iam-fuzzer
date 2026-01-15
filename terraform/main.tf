@@ -1,10 +1,4 @@
 
-#  Demo: IAM Role Trust Policy Risk Scenarios
-#  - Strange account trust
-#  - Confused deputy (missing ExternalId)
-#  - Safe vendor role with ExternalId
-# 
-
 provider "aws" {
   region = "us-east-1"
 }
@@ -22,7 +16,6 @@ resource "aws_iam_role" "risk_stranger" {
   name = "target-prod-risk-stranger"
 
   # Allows account 220065406396 to assume this role.
-  # jsonencode helps format to JSON syntax
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
