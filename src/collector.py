@@ -44,13 +44,15 @@ def list_customer_policies(profile_name): # Managed policy
 
             # Reporting and storing
             if findings:
-                print(f"\nAlert! Founds risks {findings} in {policy['PolicyName']}")
+                created_on = policy['CreateDate'].strftime("%Y-%m-%d")
+                print(f"\nAlert! Founds risks {findings} in {policy['PolicyName']} created on {policy['Created_on']}")
 
                 # Creating a dictionary for this specific finding
                 finding_data = {
                     "Type": "Managed Policy",
                     "Name": policy['PolicyName'],
                     "ARN" : policy['Arn'],
+                    "Date": policy['Created_on'],
                     "Risks": findings
                 }
                 # Adding it to the final bucket
@@ -122,21 +124,24 @@ def scan_roles(profile_name):
     print(f"\nScanning Roles for Trust Policy risks in {profile_name}...")
 
     # Boto3 'list_roles' returns the Trust Policy directly!
-    # We use a Paginator here because there might be > 100 roles (AWS default limit)
+    # I use a Paginator here because there might be > 100 roles (AWS default limit)
     paginator = iam.get_paginator('list_roles')
     
     for page in paginator.paginate():
         for role in page['Roles']:
             role_name = role['RoleName']
             role_arn = role['Arn']
+
+            # This indicates if this is an old or new risk
+            created_date = role.get('CreateDate').strftime("%Y-%m-%d") if role.get('CreateDate') else "N/A"
             
-            # 1. Get the Trust Policy (It's already in the response!)
+            # Get the Trust Policy (It's already in the response!)
             trust_policy = role['AssumeRolePolicyDocument']
 
-            # 2. Analyze it
+            # Analyzer
             findings = analyze_policy(trust_policy)
 
-            # 3. Report Risks
+            # Report Risks
             if findings:
                 print(f"Role risk! '{role_name}': {findings}")
 
@@ -144,6 +149,7 @@ def scan_roles(profile_name):
                     "Type": "Role Trust Policy",
                     "Name": role_name,
                     "ARN": role_arn,
+                    "Date": created_date,
                     "Risks": findings
                 }
                 findings_list.append(finding_data)
