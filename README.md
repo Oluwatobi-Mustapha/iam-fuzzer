@@ -1,67 +1,65 @@
 ## 🏗️ Architecture
 
 ```mermaid
-flowchart TD
-    %% Define Styles
-    classDef tf fill:#7B42BC,stroke:#333,stroke-width:2px,color:white;
-    classDef aws fill:#FF9900,stroke:#333,stroke-width:2px,color:white;
+flowchart LR
+    %% GLOBAL STYLES
+    classDef tf fill:#6A4495,stroke:#333,stroke-width:2px,color:white;
+    classDef aws fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:white;
     classDef py fill:#3776AB,stroke:#333,stroke-width:2px,color:white;
     classDef html fill:#E34F26,stroke:#333,stroke-width:2px,color:white;
-    classDef file fill:#F1F1F1,stroke:#333,stroke-width:1px,color:black,stroke-dasharray: 5 5;
+    classDef data fill:#F1F1F1,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5,color:black;
 
-    %% Phase 1
-    subgraph Infrastructure ["Phase 1: Infrastructure (Terraform)"]
+    %% PHASE 1: INFRASTRUCTURE
+    subgraph P1 [Phase 1: Infrastructure]
         direction TB
-        TFCode[main.tf]:::tf
-        TFApply(terraform apply):::tf
-        TFCode --> TFApply
+        TF[main.tf]:::tf
+        CMD(terraform apply):::tf
+        TF --> CMD
     end
 
-    %% Phase 2
-    subgraph Cloud ["Phase 2: AWS Cloud Environment"]
+    %% PHASE 2: CLOUD ENV
+    subgraph P2 [Phase 2: AWS Cloud]
         direction TB
         IAM((IAM Service)):::aws
         
-        TFApply -->|Deploys| IAM
+        %% Vulnerable Resources
+        R1(Role: Stranger Danger):::aws
+        R2(Role: Confused Deputy):::aws
+        R3(Role: Admin Access):::aws
         
-        %% The Vulnerabilities
-        RoleA(Role: Stranger Danger)
-        RoleB(Role: Confused Deputy)
-        RoleC(Role: Admin Access)
-        
-        IAM -.->|Creates| RoleA
-        IAM -.->|Creates| RoleB
-        IAM -.->|Creates| RoleC
+        IAM --- R1
+        IAM --- R2
+        IAM --- R3
     end
 
-    %% Phase 3
-    subgraph Engine ["Phase 3: The Engine (Python)"]
+    %% PHASE 3: ENGINE
+    subgraph P3 [Phase 3: The Engine]
         direction TB
-        Collector[collector.py]:::py
-        Analyzer[analyzer.py]:::py
-        Visualizer[visualizer.py]:::py
+        Col[collector.py]:::py
+        Ana[analyzer.py]:::py
         
-        RawData[findings.json]:::file
+        %% Data Store
+        JSON[(findings.json)]:::data
         
-        %% Data Flow
-        Collector -->|1. Boto3 API| IAM
-        IAM -->|2. JSON Response| Collector
-        Collector -->|3. Policy Data| Analyzer
-        Analyzer -->|4. Risk Logic| RawData
-        RawData -->|5. Input| Visualizer
+        Col -->|1. Fetch| Ana
+        Ana -->|2. Logic| JSON
     end
 
-    %% Phase 4
-    subgraph UI ["Phase 4: Presentation (HTML5)"]
+    %% PHASE 4: UI
+    subgraph P4 [Phase 4: Presentation]
         direction TB
-        Report[report.html]:::html
-        Browser(Web Browser):::html
+        Viz[visualizer.py]:::py
+        Rep[report.html]:::html
+        Web(Browser):::html
         
-        Visualizer -->|Generates| Report
-        Report -->|Auto-Open| Browser
+        Viz -->|3. Generate| Rep
+        Rep -->|4. View| Web
     end
 
-    %% Connections between phases
-    Infrastructure --> Cloud
-    Cloud --> Engine
-    Engine --> UI
+    %% CONNECTIONS BETWEEN PHASES
+    CMD ====================>|Deploys Resources| IAM
+    IAM -.->|Boto3 API| Col
+    JSON ==>|Input Data| Viz
+
+    %% LINK STYLING
+    linkStyle default stroke-width:2px,fill:none,stroke:#333;
