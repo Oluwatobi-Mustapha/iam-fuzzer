@@ -33,7 +33,14 @@ I pivoted from a basic data table to a Tesla-style Product Dashboard to improve 
     * **Cache Busting:** Appended `?t={timestamp}` to the report URL to force browsers to load fresh data on every run.
     * **Compliance:** Added Scan ID and Generated Time (UTC) to the header.
 
-## 5. Outcome
+## 5. Final Architecture & Outcome
+
+**Infrastructure: Terraform Lab (Vulnerable Resources).**
+
+**Scanner: Python/Boto3 (Logic + History).**
+
+**Report: HTML5/CSS3 (Interactive Dashboard).**
+
 The **IAM Fuzzer v1.0** is feature-complete. It successfully deploys vulnerable infrastructure, detects complex logical risks with high precision, and generates a client-ready interactive report.
 
 **_Screenshot_:**
