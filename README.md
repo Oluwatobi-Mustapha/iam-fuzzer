@@ -63,4 +63,4 @@ report.html
 | File Name        | Description |
 |------------------|-------------|
 | `findings.json`  | JSON-formatted log of all detected risks, suitable for programmatic auditing |
-| `report.html`    | Standalone HTML file containing the risk assessment dashboard |
+| `report.html`    | Interactive HTML dashboard containing Context-Aware Remediation steps |
