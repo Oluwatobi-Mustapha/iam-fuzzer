@@ -1,0 +1,20 @@
+# Replace with your environment name, e.g., "test" or "dev"
+environment = "REPLACE_ME"
+
+# Replace with the AWS account ID of the external stranger (Stranger Danger scenario)
+external_account_id = "REPLACE_ME"
+
+# Replace with the AWS account ID of your vendor/cross-account role
+vendor_account_id  = "REPLACE_ME"
+
+# Replace with a secret ExternalId to prevent confused deputy attacks
+external_id = "REPLACE_ME"
+
+# Tags applied to all roles(optional), but feel free to change
+common_tags = {
+  Env   = "REPLACE_ME"
+  Owner = "YOUR_NAME"
+}
+
+Note: This is a template file. Do not commit your real terraform.tfvars to Git
+Copy this file to terraform.tfvars and fill in your values. 
