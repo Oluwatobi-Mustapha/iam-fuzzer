@@ -54,15 +54,20 @@ def analyze_policy(policy_json):
                     # Logic: We only care about Account ARNs, not Services (like ec2.amazonaws.com)
                     if "arn:aws:iam::" in entity_arn:
                         
-                        # The confused deputy check 
-                        # If you trust an external account, you MUST check for 'sts:ExternalId' in the Condition.
+                        # The Confused Deputy check 
+                        # If you trust an external account, you MUST check for 'sts:ExternalId' 
+                        # Or 'aws:SourceAccount' or 'aws:SourceArn' in the Condition.
                         # We convert the condition dict to a string for a quick search.
-                        if "sts:ExternalId" not in str(condition):
-                            findings.append(f"HIGH: Confused Deputy Risk! Trusting {entity_arn} without ExternalId.")
+                        condition_str = str(condition)
+                        has_external_id = "sts:ExternalId" in condition_str
+                        has_source_account = "aws:SourceAccount" in condition_str
+                        has_source_arn = "aws:SourceArn" in condition_str
+
+                        if not (has_external_id or has_source_account or has_source_arn):
+                            findings.append(f"HIGH: Confused Deputy Risk! Trusting {entity_arn} without ExternalId or SourceAccount or SourceArn.")
                         else:
-                            # It has the secret, but we still flag it so you know the door exists.
                             findings.append(f"WARNING: Cross-Account Trust detected to {entity_arn}")
-            
+                            
                 # BLOCK 3: PERMISSION POLICY LOGIC (What can this do?)
         else:
             # 1. Normalize Action/Resource to lists
