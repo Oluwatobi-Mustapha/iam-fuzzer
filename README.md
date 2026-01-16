@@ -1,5 +1,39 @@
 # iam-fuzzer
+graph LR
+    subgraph "Infrastructure Layer (Terraform)"
+        TF[main.tf] -->|Deploys| Lab[Vulnerable IAM Lab]
+        Lab -.->|Creates| RoleA(Stranger Danger Role)
+        Lab -.->|Creates| RoleB(Confused Deputy Role)
+    end
 
+    subgraph "AWS Cloud"
+        AWS((AWS IAM Service))
+        RoleA --- AWS
+        RoleB --- AWS
+    end
+
+    subgraph "Application Layer (Python)"
+        Col[collector.py] -->|Boto3: GetAccountAuthorizationDetails| AWS
+        AWS -->|Raw JSON| Col
+        Col -->|Policy Data| An[analyzer.py]
+        An -->|Logic: SourceAccount/ExternalID Check| Findings[findings.json]
+    end
+
+    subgraph "Presentation Layer"
+        Findings -->|Input| Viz[visualizer.py]
+        Viz -->|Generates| HTML[report.html]
+        HTML -->|Opens in| Browser(Chrome/Safari)
+    end
+
+    classDef aws fill:#FF9900,stroke:#232F3E,color:white;
+    classDef py fill:#3776AB,stroke:#333,color:white;
+    classDef tf fill:#7B42BC,stroke:#333,color:white;
+    classDef html fill:#E34F26,stroke:#333,color:white;
+
+    class AWS aws;
+    class Col,An,Viz py;
+    class TF tf;
+    class HTML html;
 A specialized security tool for detecting privilege escalation paths in AWS Identity & Access Management (IAM). It scans both managed and inline policies to identify Shadow Admin risks based on dangerous permission combinations (`iam:CreateUser` + `iam:AttachUserPolicy`).
 
 ## Prerequisites
@@ -62,6 +96,7 @@ python3 src/visualizer.py
 |------------------|-------------|
 | `findings.json`  | JSON-formatted log of all detected risks, suitable for programmatic auditing |
 | `report.html`    | Standalone HTML file containing the risk assessment dashboard |
+
 
 
 
