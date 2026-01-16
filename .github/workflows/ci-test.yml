@@ -1,4 +1,4 @@
-name: IAM Tool Smoke Test
+name: IAM Fuzzer Smoke Test
 
 # Trigger: Wake up the robot every time I push code
 on: [push]
