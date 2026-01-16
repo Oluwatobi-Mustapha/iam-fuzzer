@@ -111,6 +111,43 @@ def list_inline_policies(profile_name):
                 findings_list.append(finding_data)
             else:
                 print(f"User '{username}' - Policy '{policy_name}' is safe.\n")
+
+def scan_roles(profile_name):
+    """
+    Scans all IAM Roles for dangerous Trust Policies.
+    """
+    session = boto3.Session(profile_name=profile_name)
+    iam = session.client('iam')
+
+    print(f"\nScanning Roles for Trust Policy risks in {profile_name}...")
+
+    # Boto3 'list_roles' returns the Trust Policy directly!
+    # We use a Paginator here because there might be > 100 roles (AWS default limit)
+    paginator = iam.get_paginator('list_roles')
+    
+    for page in paginator.paginate():
+        for role in page['Roles']:
+            role_name = role['RoleName']
+            role_arn = role['Arn']
+            
+            # 1. Get the Trust Policy (It's already in the response!)
+            trust_policy = role['AssumeRolePolicyDocument']
+
+            # 2. Analyze it
+            findings = analyze_policy(trust_policy)
+
+            # 3. Report Risks
+            if findings:
+                print(f"Role risk! '{role_name}': {findings}")
+
+                finding_data = {
+                    "Type": "Role Trust Policy",
+                    "Name": role_name,
+                    "ARN": role_arn,
+                    "Risks": findings
+                }
+                findings_list.append(finding_data)
+
 def save_findings():
     """Writes the the findings_list into a JSON file"""
     print(f"\n Saving results to findings.json...")
@@ -144,4 +181,5 @@ if __name__ == '__main__':
     # EXECUTE: Pass the dynamic variable to our functions
     list_customer_policies(profile)
     list_inline_policies(profile)
+    scan_roles(profile)
     save_findings()
