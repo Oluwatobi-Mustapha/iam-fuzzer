@@ -135,7 +135,7 @@ def scan_roles(profile_name):
             # This indicates if this is an old or new risk
             created_date = role.get('CreateDate').strftime("%Y-%m-%d") if role.get('CreateDate') else "N/A"
             
-            # Get the Trust Policy (It's already in the response!)
+            # Get the Trust Policy 
             trust_policy = role['AssumeRolePolicyDocument']
 
             # Analyzer
@@ -184,7 +184,7 @@ if __name__ == '__main__':
 
     print(f"Starting scan for profile...{profile}...")
 
-    # EXECUTE: Pass the dynamic variable to our functions
+    # EXECUTE: Pass the dynamic variable to all the functions
     list_customer_policies(profile)
     list_inline_policies(profile)
     scan_roles(profile)
