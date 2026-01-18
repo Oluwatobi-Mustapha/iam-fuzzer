@@ -23,4 +23,4 @@ The **IAM Fuzzer** is now a fully functional security pipeline:
 * **Documentation:** Realized that a good README and Architecture Diagram are what separate "scripts" from "software."
 
 ## 4. Next Steps
-* (Future) Consider adding support for Azure or GCP.
+* Consider adding support for Azure or GCP.
