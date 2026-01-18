@@ -72,7 +72,9 @@ report.html
 ## 4. Dashboard Preview
 The tool generates an interactive HTML report (`report.html`) that visualizes the risk paths and provides remediation steps.
 
-![IAM Fuzzer Dashboard](dashboard-screenshot.png)
+<img width="2688" height="1680" alt="image" src="https://github.com/user-attachments/assets/3521a860-edb2-43ae-a361-aef8d056c663" />
+
+
 
 
 
