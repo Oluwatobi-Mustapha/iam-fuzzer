@@ -18,7 +18,7 @@ pip install boto3
 ----
 ## Architecture Overview
 
-![4610B0F5-D928-44A9-84E9-B9F3D41391DF_1_201_a](https://github.com/user-attachments/assets/8560d727-43e8-4c28-97e2-81a34675904b)
+<img width="1671" height="1130" alt="image" src="https://github.com/user-attachments/assets/fb7bb09b-b896-4c52-8b43-d2243fb3ef0c" />
 
 
 -----
@@ -66,6 +66,7 @@ report.html
 |------------------|-------------|
 | `findings.json`  | JSON-formatted log of all detected risks, suitable for programmatic auditing |
 | `report.html`    | Interactive HTML dashboard containing Context-Aware Remediation steps |
+
 
 
 
