@@ -1,6 +1,4 @@
 # --- Terraform ---
-# The .terraform directory contains the downloaded providers/plugins
-.terraform/
 
 # The State Files (SENSITIVE)
 *.tfstate
@@ -32,3 +30,4 @@ report.html
 .idea/
 **/.idea/
 *.iml
+
