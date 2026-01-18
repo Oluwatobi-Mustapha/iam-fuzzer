@@ -16,9 +16,10 @@ cd iam-fuzzer
 pip install boto3
 ```
 ----
-# Architecture
+## Architecture Overview
 
-* ![7CA82268-5814-490B-9150-92F8A0FBB5E8_1_201_a](https://github.com/user-attachments/assets/4ce833d5-648d-45ec-8b6e-00f5dfceb4bd)
+* ![Architecture Diagram](<img width="1621" height="1140" alt="image" src="https://github.com/user-attachments/assets/0484ea48-a40d-4af6-9bde-301cee8852a0" />)
+
 
 -----
 ## Tool Usage
@@ -65,5 +66,6 @@ report.html
 |------------------|-------------|
 | `findings.json`  | JSON-formatted log of all detected risks, suitable for programmatic auditing |
 | `report.html`    | Interactive HTML dashboard containing Context-Aware Remediation steps |
+
 
 
