@@ -18,7 +18,8 @@ pip install boto3
 ----
 ## Architecture Overview
 
-![58EFF845-7D0A-46A2-AA5D-225FB63E0744_1_201_a](https://github.com/user-attachments/assets/a36552c6-02bd-4566-bf74-bab7f7005156)
+![6E47CA48-362A-431C-A559-59D5A41E0065_1_201_a](https://github.com/user-attachments/assets/d8ddc118-9f7b-4a75-a190-41e1bf89244d)
+
 
 -----
 ## Tool Usage
@@ -72,6 +73,7 @@ report.html
 The tool generates an interactive HTML report (`report.html`) that visualizes the risk paths and provides remediation steps.
 
 <img width="2688" height="1680" alt="image" src="https://github.com/user-attachments/assets/3521a860-edb2-43ae-a361-aef8d056c663" />
+
 
 
 
