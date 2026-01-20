@@ -1,0 +1,27 @@
+// Language: javascript
+import fs from 'fs';
+import path from 'path';
+
+export async function runTests() {
+  const relPath = path.join(process.cwd(), 'terraform', 'variables.tf');
+  if (!fs.existsSync(relPath)) {
+    throw new Error('terraform/variables.tf not found');
+  }
+
+  const content = fs.readFileSync(relPath, 'utf8');
+  if (!content || content.trim().length === 0) {
+    throw new Error('terraform/variables.tf is empty');
+  }
+
+  const lowered = content.toLowerCase();
+  const hasVariable = /(^|\s)variable\s+"?[\w-]+"?/m.test(lowered);
+  const hasTerraformOrProvider = lowered.includes('terraform') || lowered.includes('provider');
+
+  if (!hasVariable && !hasTerraformOrProvider) {
+    throw new Error('terraform/variables.tf does not appear to contain Terraform variable blocks or common terraform/provider keywords');
+  }
+
+  // Basic sanity: no binary garbage, reasonable size
+  const bytes = Buffer.byteLength(content, 'utf8');
+  if (bytes < 10) throw new Error('terraform/variables.tf seems too small to be valid');
+}
