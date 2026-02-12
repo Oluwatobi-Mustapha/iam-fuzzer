@@ -37,7 +37,7 @@ pytokens==0.3.0
 pytz==2025.2
 PyYAML==6.0.2
 referencing==0.36.2
-request==2.32.4
+requests==2.32.4
 rpds-py==0.27.0
 ruamel.yaml==0.18.14
 ruamel.yaml.clib==0.2.12
