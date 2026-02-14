@@ -21,7 +21,7 @@ venv/
 # --- OS Junk ---
 .DS_Store
 .DS_Store
-.DS_Store
+
 
 
 findings.json
