@@ -30,7 +30,7 @@ report.html
 
 # Ignore JetBrains IDE settings
 .idea/
-
+**/.idea/
 *.iml
 
 
